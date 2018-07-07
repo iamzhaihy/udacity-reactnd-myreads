@@ -5,26 +5,38 @@ import BookShelf from './BookShelf';
 
 class BooksApp extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
-            books: {
-                all: [],
-                currentlyReading: [],
-                wantToRead: [],
-                read: []
-            },
+            books: [],
             showSearchPage: false
-        }
+        };
+
+        this.onMoveBook = this.onMoveBook.bind(this);
     }
 
     componentDidMount() {
-        BooksAPI.getAll().then((books) => {
-            this.setState({books: {all: books}});
+        BooksAPI.getAll().then((all_books) => {
+            this.setState({books: all_books});
         });
+    }
+
+    onMoveBook(book_id, dest_shelf) {
+        let _books = this.state.books.slice();
+        _books.forEach(b => {
+            if (b.id === book_id) {
+                b.shelf = dest_shelf;
+            }
+        });
+
+        this.setState({books: _books});
     }
 
     render() {
         const { books } = this.state;
+        const currentlyReading = books.filter(b => b.shelf === 'currentlyReading');
+        const wantToRead = books.filter(b => b.shelf === 'wantToRead');
+        const read = books.filter(b => b.shelf === 'read');
+        
         return (
             <div className="app">
                 {this.state.showSearchPage ? (
@@ -54,9 +66,9 @@ class BooksApp extends React.Component {
                     </div>
                     <div className="list-books-content">
                         <div>
-                            <BookShelf shelfTitle="Currently Reading" books={books.all}/>
-                            <BookShelf shelfTitle="Want to Read" books={books.wantToRead}/>
-                            <BookShelf shelfTitle="Read" books={books.read}/>
+                            <BookShelf shelfTitle="Currently Reading" books={currentlyReading} onMoveBook={this.onMoveBook}/>
+                            <BookShelf shelfTitle="Want to Read" books={wantToRead} onMoveBook={this.onMoveBook}/>
+                            <BookShelf shelfTitle="Read" books={read} onMoveBook={this.onMoveBook}/>
                         </div>
                     </div>
                     <div className="open-search">
