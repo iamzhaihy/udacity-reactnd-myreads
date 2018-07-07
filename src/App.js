@@ -7,14 +7,13 @@ class BooksApp extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-        books: {
-            all: [],
-            currentlyReading: [],
-            wantToRead: [],
-            read: []
-        },
-        
-        showSearchPage: false
+            books: {
+                all: [],
+                currentlyReading: [],
+                wantToRead: [],
+                read: []
+            },
+            showSearchPage: false
         }
     }
 
@@ -25,6 +24,7 @@ class BooksApp extends React.Component {
     }
 
     render() {
+        const { books } = this.state;
         return (
             <div className="app">
                 {this.state.showSearchPage ? (
@@ -54,9 +54,9 @@ class BooksApp extends React.Component {
                     </div>
                     <div className="list-books-content">
                         <div>
-                            <BookShelf shelfTitle="Currently Reading" books={this.state.books.all}/>
-                            <BookShelf shelfTitle="Want to Read" books={this.state.books.all}/>
-                            <BookShelf shelfTitle="Read" books={this.state.books.all}/>
+                            <BookShelf shelfTitle="Currently Reading" books={books.all}/>
+                            <BookShelf shelfTitle="Want to Read" books={books.wantToRead}/>
+                            <BookShelf shelfTitle="Read" books={books.read}/>
                         </div>
                     </div>
                     <div className="open-search">
