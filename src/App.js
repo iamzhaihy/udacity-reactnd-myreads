@@ -1,8 +1,8 @@
 import React from 'react';
 import * as BooksAPI from './BooksAPI';
 import './App.css';
-import BookShelf from './BookShelf';
 import BookSearchBar from './BookSearchBar';
+import BookLists from './BookLists';
 
 class BooksApp extends React.Component {
     constructor(props) {
@@ -33,31 +33,12 @@ class BooksApp extends React.Component {
     }
 
     render() {
-        const { books } = this.state;
-        const currentlyReading = books.filter(b => b.shelf === 'currentlyReading');
-        const wantToRead = books.filter(b => b.shelf === 'wantToRead');
-        const read = books.filter(b => b.shelf === 'read');
-        
         return (
             <div className="app">
                 {this.state.showSearchPage ? (
-                <BookSearchBar />
+                    <BookSearchBar />
                 ) : (
-                <div className="list-books">
-                    <div className="list-books-title">
-                        <h1>MyReads</h1>
-                    </div>
-                    <div className="list-books-content">
-                        <div>
-                            <BookShelf shelfTitle="Currently Reading" books={currentlyReading} onMoveBook={this.onMoveBook}/>
-                            <BookShelf shelfTitle="Want to Read" books={wantToRead} onMoveBook={this.onMoveBook}/>
-                            <BookShelf shelfTitle="Read" books={read} onMoveBook={this.onMoveBook}/>
-                        </div>
-                    </div>
-                    <div className="open-search">
-                        <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
-                    </div>
-                </div>
+                    <BookLists books={this.state.books} onMoveBook={this.onMoveBook}/>
                 )}
             </div>
         )
