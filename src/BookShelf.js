@@ -8,15 +8,15 @@ class BookShelf extends React.Component {
             <div className="bookshelf">
                 <h2 className="bookshelf-title">{shelfTitle}</h2>
                 <div className="bookshelf-books">
-                <ol className="books-grid">
-                    {books && books.map(book => {
-                        return (<li key={book.id}> <Book bookInfo={book} onMove={onMoveBook}/> </li>);
-                    })}
-                </ol>
+                    <ol className="books-grid">
+                        {books && books.map(book => {
+                            return (<li key={book.id}> <Book bookInfo={book} onMove={onMoveBook}/> </li>);
+                        })}
+                    </ol>
                 </div>
             </div>
         )
     }
 }
 
-export default BookShelf
+export default BookShelf;
