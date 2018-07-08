@@ -31,11 +31,11 @@ class BookSearchBar extends React.Component {
     }
 
     render() {
-        const {onMoveBook} = this.props;
+        const { onAddBook } = this.props;
         const search_results = [];
         this.state.search_results.forEach(res => {
             search_results.push((
-                <li key={res.id}> <Book bookInfo={res} onMove={onMoveBook}/> </li>
+                <li key={res.id}> <Book bookInfo={res} onMove={onAddBook}/> </li>
             ));
         });
         

@@ -22,10 +22,10 @@ class BooksApp extends React.Component {
         });
     }
 
-    onMoveBook(book_id, dest_shelf) {
+    onMoveBook(book, dest_shelf) {
         let _books = this.state.books.slice();
         _books.forEach(b => {
-            if (b.id === book_id) {
+            if (b.id === book.id) {
                 b.shelf = dest_shelf;
                 BooksAPI.update(b, dest_shelf);
             }
@@ -34,19 +34,20 @@ class BooksApp extends React.Component {
         this.setState({books: _books});
     }
 
-    onAddBook(book_obj, dest_shelf) {
-        book_obj.shelf = dest_shelf;
-        BooksAPI.update(book_obj, dest_shelf);
+    onAddBook(book, dest_shelf) {
         let _books = this.state.books.slice();
-        _books.push(book_obj);
+        book.shelf = dest_shelf;
+        _books.push(book);
+
         this.setState({books: _books});
+        BooksAPI.update(book, dest_shelf);
     }
 
     render() {
         return (
             <div className="app">
                 <Route path='/search' render={() => (
-                    <BookSearchBar />
+                    <BookSearchBar onAddBook={this.onAddBook}/>
                 )}/>
                 <Route exact path='/' render={() => (
                     <BookLists books={this.state.books} onMoveBook={this.onMoveBook} />
