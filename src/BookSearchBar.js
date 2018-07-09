@@ -36,9 +36,15 @@ class BookSearchBar extends React.Component {
     }
 
     render() {
-        const { onAddBook } = this.props;
+        const { books, onAddBook } = this.props;
         const search_results = [];
         this.state.search_results.forEach(res => {
+            Object.keys(books).forEach(key => {
+                if (books[key].map(b => b.id).includes(res.id)) {
+                    res.shelf = key;
+                }
+            });
+
             search_results.push((
                 <li key={res.id}> <Book bookInfo={res} onMove={onAddBook}/> </li>
             ));
