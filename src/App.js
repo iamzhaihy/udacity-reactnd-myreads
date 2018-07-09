@@ -1,9 +1,10 @@
 import React from 'react';
 import * as BooksAPI from './BooksAPI';
 import './App.css';
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import BookLists from './BookLists';
 import BookSearchBar from './BookSearchBar';
+import NotFound from './NotFound';
 
 class BooksApp extends React.Component {
     constructor(props) {
@@ -46,12 +47,15 @@ class BooksApp extends React.Component {
     render() {
         return (
             <div className="app">
-                <Route path='/search' render={() => (
-                    <BookSearchBar onAddBook={this.onAddBook}/>
-                )}/>
-                <Route exact path='/' render={() => (
-                    <BookLists books={this.state.books} onMoveBook={this.onMoveBook} />
-                )}/>
+                <Switch> 
+                    <Route path='/search' render={() => (
+                        <BookSearchBar onAddBook={this.onAddBook}/>
+                    )}/>
+                    <Route exact path='/' render={() => (
+                        <BookLists books={this.state.books} onMoveBook={this.onMoveBook} />
+                    )}/>
+                    <Route component={NotFound}></Route>
+                </Switch>
             </div>
         )
     }
