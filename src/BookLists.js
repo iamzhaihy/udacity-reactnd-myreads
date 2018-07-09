@@ -4,9 +4,7 @@ import { Link } from 'react-router-dom'
 
 function BookLists(props) {
     const { books, onMoveBook } = props;
-    const currentlyReading = books.filter(b => b.shelf === 'currentlyReading');
-    const wantToRead = books.filter(b => b.shelf === 'wantToRead');
-    const read = books.filter(b => b.shelf === 'read');
+    const { currentlyReading, wantToRead, read }= books;
 
     return (
         <div className="list-books">
