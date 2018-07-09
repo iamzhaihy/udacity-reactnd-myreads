@@ -17,10 +17,15 @@ class BookSearchBar extends React.Component {
     handleChange(event) {
         const _query = event.target.value;
         this.setState({query: _query});
-        !_query || BooksAPI.search(_query).then(results => {
+
+        // send request if query is not empty
+        _query && BooksAPI.search(_query).then(results => {
             let _results = Array.isArray(results) ? results : [];
             this.setState({search_results: _results});
         });
+
+        // empty search results if query is empty
+        !_query && this.setState({search_results: []});
     }
 
     componentWillUnmount() {
